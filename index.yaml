@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   archi-steam-farm:
   - apiVersion: v2
+    appVersion: 5.3.2.4
+    created: "2022-11-04T16:20:54.957106295Z"
+    description: C# application with primary purpose of farming Steam cards from multiple
+      accounts simultaneously.
+    digest: d734e105a629652e8d618b294e0dd784dbdcf04b0297eaac58945fd524692966
+    name: archi-steam-farm
+    type: application
+    urls:
+    - https://github.com/truelecter/charts/releases/download/archi-steam-farm-1.0.0/archi-steam-farm-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 5.3.1.2
     created: "2022-11-03T21:53:53.750427797Z"
     description: C# application with primary purpose of farming Steam cards from multiple
@@ -12,4 +23,4 @@ entries:
     urls:
     - https://github.com/truelecter/charts/releases/download/archi-steam-farm-0.1.4/archi-steam-farm-0.1.4.tgz
     version: 0.1.4
-generated: "2022-11-03T21:53:53.750433897Z"
+generated: "2022-11-04T16:20:54.957162497Z"
