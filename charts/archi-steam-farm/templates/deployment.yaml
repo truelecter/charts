@@ -25,6 +25,22 @@ spec:
       serviceAccountName: {{ include "archi-steam-farm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+      {{- if .Values.sidecars.configAutoReload.ASFJsonSecretRef }}
+      - name: init-asf-json
+        image: "{{ .Values.sidecars.configAutoReload.image }}"
+        imagePullPolicy: {{ .Values.sidecars.configAutoReload.imagePullPolicy }}
+        {{- if .Values.sidecars.configAutoReload.containerSecurityContext }}
+        securityContext: 
+          {{- toYaml .Values.sidecars.configAutoReload.containerSecurityContext | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        - name: config-volume
+          mountPath: "/etc/asf"
+        - name: asf-json
+          mountPath: "/opt/secret"
+        command: ['sh', '-c', 'cp /opt/secret/* /etc/asf/ASF.json']
+      {{- end }}
       containers:
       {{- if .Values.sidecars.configAutoReload.enabled }}
       - name: config-reload
@@ -47,19 +63,21 @@ spec:
           value: "{{ include "archi-steam-farm.fullname" . }}"
         - name: FOLDER
           value: "/etc/asf"
+        - name: RESOURCE
+          value: both
         - name: NAMESPACE
           value: '{{ .Values.sidecars.configAutoReload.searchNamespace | default .Release.Namespace }}'
-        {{- if .Values.controller.sidecars.configAutoReload.env }}
-        {{- (tpl (toYaml .Values.controller.sidecars.configAutoReload.env) .) | nindent 8 }}
+        {{- if .Values.sidecars.configAutoReload.env }}
+        {{- (tpl (toYaml .Values.sidecars.configAutoReload.env) .) | nindent 8 }}
         {{- end }}
         resources:
-        {{- toYaml .Values.controller.sidecars.configAutoReload.resources | nindent 10 }}
+        {{- toYaml .Values.sidecars.configAutoReload.resources | nindent 10 }}
         volumeMounts:
         - name: config-volume
           mountPath: "/etc/asf"
       {{- end }}
-      {{- if .Values.controller.sidecars.other}}
-      {{ tpl (toYaml .Values.controller.sidecars.other | indent 6) .}}
+      {{- if .Values.sidecars.other}}
+      {{ tpl (toYaml .Values.sidecars.other | indent 6) .}}
       {{- end }}
       - name: main
         securityContext:
@@ -70,8 +88,8 @@ spec:
         envFrom:
         {{- (tpl (toYaml .Values.envFrom) .) | nindent 8 }}
         {{- end }}
-        env:
         {{- if .Values.env }}
+        env:
         {{- (tpl (toYaml .Values.env) .) | nindent 8 }}
         {{- end }}
         ports:
@@ -93,13 +111,20 @@ spec:
           mountPath: "/app/config"
       volumes:
       {{- if .Values.sidecars.configAutoReload.enabled }}
+      {{- if .Values.sidecars.configAutoReload.ASFJsonSecretRef }}
+      - name: asf-json
+        projected:
+          sources:
+          - secret:
+              name: {{ .Values.sidecars.configAutoReload.ASFJsonSecretRef | quote }}
+      {{- end }}
       - name: config-volume
         emptyDir: {}
-      {{- end }}
+      {{- else }}
       - name: config-volume
         projected:
           sources:
-          {{- if .Values.asfConfigs }}
+          {{- if .Values.config.asfConfigs }}
           - secret:
               name: {{ include "archi-steam-farm.fullname" . }}
           {{- end }}
@@ -111,7 +136,7 @@ spec:
           - configMap:
               name: {{ . }}
           {{- end }}
-      {{- else }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
