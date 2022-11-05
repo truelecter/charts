@@ -23,4 +23,14 @@ entries:
     urls:
     - https://github.com/truelecter/charts/releases/download/archi-steam-farm-0.1.4/archi-steam-farm-0.1.4.tgz
     version: 0.1.4
-generated: "2022-11-04T16:20:54.957162497Z"
+  pandora:
+  - apiVersion: v2
+    created: "2022-11-05T21:19:58.427032596Z"
+    description: A Helm chart for Kubernetes
+    digest: e0dc7303b64f5df5d3ccd8ddacb68e5a55e679769bdbbbedeac07af514f69b3a
+    name: pandora
+    type: application
+    urls:
+    - https://github.com/truelecter/charts/releases/download/pandora-1.0.0/pandora-1.0.0.tgz
+    version: 1.0.0
+generated: "2022-11-05T21:19:58.427041896Z"
