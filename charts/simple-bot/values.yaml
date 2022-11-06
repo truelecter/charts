@@ -1,0 +1,83 @@
+replicaCount: 1
+
+image:
+  repository: ~
+  tag: ~
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+envFrom: []
+env: []
+
+probes:
+  # Set to valid port value to enable port for http probes
+  port: ~
+  liveness:
+    # httpGet:
+    #   path: /
+    #   port: 80
+  readiness:
+    # httpGet:
+    #   path: /
+    #   port: 80
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+serviceMonitor:
+  # -- (int) Custom port for metrics
+  port: 9090
+  # -- (string) Scrape endpoint
+  path: /metrics
+  # -- (string) Scrape interval
+  interval: 30s
+  # -- (bool) Create ServiceMonitor for this deployment. Includes endpoints for all sidecar containers
+  enabled: false
+  # -- (bool) Disable main container metrics
+  disableServiceMetrics: false
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+sidecars: []
+# Full container spec

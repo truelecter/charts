@@ -1,0 +1,33 @@
+{{- if .Values.serviceMonitor.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "simple-bot.fullname" . }}
+  labels:
+    {{- include "simple-bot.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+  - name: {{ $.Values.global.serviceName }}-{{- $deployment.name }}
+    port: {{ .Values.serviceMonitor.port }}
+    targetPort: {{ .Values.serviceMonitor.port }}
+    protocol: TCP
+  selector:
+    {{- include "simple-bot.selectorLabels" . | nindent 4 }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "simple-bot.fullname" . }}
+  labels:
+    {{- include "simple-bot.labels" . | nindent 4 }}
+spec:
+  endpoints:
+  - interval: {{ .Values.serviceMonitor.interval }}
+    path: {{ .Values.serviceMonitor.path }}
+    targetPort: {{ .Values.serviceMonitor.port }}
+  selector:
+    matchLabels:
+      app: {{ include "simple-bot.fullname" . }}
+{{- end }}

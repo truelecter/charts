@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "simple-bot.fullname" . }}
+  labels:
+    {{- include "simple-bot.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "simple-bot.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "simple-bot.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "simple-bot.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:      
+      {{- if .Values.sidecars }}
+      {{ tpl (toYaml .Values.sidecars | indent 6) . }}
+      {{- end }}
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.envFrom }}
+        envFrom:
+        {{- (tpl (toYaml .Values.envFrom) .) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.env }}
+        env:
+        {{- (tpl (toYaml .Values.env) .) | nindent 8 }}
+        {{- end }}
+        ports:
+        {{- if .Values.probes.port }}
+        - name: probes
+          containerPort: {{ .Values.probes.port }}
+          protocol: TCP
+        {{- end }}
+        {{- if .Values.serviceMonitor.enabled }}
+        - name: metrics
+          containerPort: {{ .Values.serviceMonitor.port }}
+          protocol: TCP
+        {{- end }}
+        {{- with .Values.probes.liveness }}
+        livenessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.probes.readiness }}
+        readinessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
