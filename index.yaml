@@ -33,4 +33,14 @@ entries:
     urls:
     - https://github.com/truelecter/charts/releases/download/pandora-1.0.0/pandora-1.0.0.tgz
     version: 1.0.0
-generated: "2022-11-05T21:19:58.427041896Z"
+  simple-bot:
+  - apiVersion: v2
+    created: "2022-11-06T16:00:18.712502933Z"
+    description: A Helm chart for Kubernetes
+    digest: 8975467f42113a34f8490ed4dfdb367ea12b5018e0fdf7f067f96a36d19b0547
+    name: simple-bot
+    type: application
+    urls:
+    - https://github.com/truelecter/charts/releases/download/simple-bot-0.1.0/simple-bot-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-11-06T16:00:18.712509733Z"
