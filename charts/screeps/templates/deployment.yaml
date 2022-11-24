@@ -47,7 +47,7 @@ spec:
       {{- if .Values.config }}
       - name: config
         configMap:
-          name:
+          name: {{ template "screeps.fullname" . }}
           items:
           - key: config.yaml
             path: keys
