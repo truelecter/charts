@@ -26,6 +26,8 @@ spec:
         - name: config
           mountPath: /screeps/config.yml
         {{- end }}
+        - name: data
+          mountPath: /screeps
         ports:
         - containerPort: {{ .Values.service.internalPort }}
         resources:
@@ -53,6 +55,7 @@ spec:
             path: keys
       {{- end }}
       {{- if .Values.persistence.enabled }}
+      - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim | default (include "screeps.fullname" .) }}
       {{- else }}
