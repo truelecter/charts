@@ -33,6 +33,17 @@ entries:
     urls:
     - https://github.com/truelecter/charts/releases/download/pandora-1.0.0/pandora-1.0.0.tgz
     version: 1.0.0
+  screeps:
+  - apiVersion: v2
+    appVersion: 5.3.2.4
+    created: "2022-11-24T19:23:36.47671689Z"
+    description: A standalone server for programming game Screeps
+    digest: be09ca24b941db528c63ed9e6b25b2788e5df57a7289327ce435974915d265df
+    name: screeps
+    type: application
+    urls:
+    - https://github.com/truelecter/charts/releases/download/screeps-1.0.0/screeps-1.0.0.tgz
+    version: 1.0.0
   simple-bot:
   - apiVersion: v2
     created: "2022-11-06T16:16:55.527454107Z"
@@ -61,4 +72,4 @@ entries:
     urls:
     - https://github.com/truelecter/charts/releases/download/simple-bot-0.1.0/simple-bot-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-06T16:16:55.527498218Z"
+generated: "2022-11-24T19:23:36.476805594Z"
