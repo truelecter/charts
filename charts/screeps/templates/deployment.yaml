@@ -25,6 +25,7 @@ spec:
         {{- if .Values.config }}
         - name: config
           mountPath: /screeps/config.yml
+          subPath: config.yaml
         {{- end }}
         - name: data
           mountPath: /screeps
@@ -52,7 +53,7 @@ spec:
           name: {{ template "screeps.fullname" . }}
           items:
           - key: config.yaml
-            path: keys
+            path: config.yaml
       {{- end }}
       {{- if .Values.persistence.enabled }}
       - name: data
