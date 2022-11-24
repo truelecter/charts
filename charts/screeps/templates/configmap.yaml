@@ -1,0 +1,9 @@
+{{- if .Values.config -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "screeps.fullname" . }}
+data:
+  config.yaml: | {{- toYaml .Values.config | nindent 4 }}
+{{- end -}}

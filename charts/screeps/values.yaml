@@ -1,0 +1,82 @@
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: screepers/screeps-launcher
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  externalPort: 21025
+  internalPort: 21025
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: pandora.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# screeps-launcher config
+config:
+  mods:
+  - screepsmod-auth
+  - screepsmod-admin-utils
+  # - screepsmod-mongo
+  # bots:
+  #   simplebot: screepsbot-zeswarm
+  serverConfig: # This section requires screepsmod-admin-utils to work
+    welcomeText:  |
+      <h1 style="text-align: center;">My Cool Server</h1>
+    tickRate: 1500
+
+persistence:
+  enabled: true
+  existingClaim:
+  storageClass:
+  annotations: {}
+  labels: {}
+  accessMode: "ReadWriteOnce"
+  size: "8Gi"
+  volumes:
+  #  - name: nothing
+  #    emptyDir: {}
+  mounts:
+  #  - mountPath: /var/nothing
+  #    name: nothing
+  #    readOnly: true
+
+resources: {}
+
+env: {}
+envSecrets: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
