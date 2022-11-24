@@ -3,14 +3,16 @@ kind: Deployment
 metadata:
   name: {{ template "screeps.fullname" . }}
   labels:
-{{ include "screeps.labels.standard" . | indent 4 }}
+    {{- include "screeps.labels.standard" . | nindent 4 }}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      {{- include "screeps.labels.standard" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ template "screeps.name" . }}
-        release: {{ .Release.Name }}
+        {{- include "screeps.labels.standard" . | nindent 8 }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
