@@ -86,7 +86,7 @@ resources: {}
 
 env:
   MONGO_HOST: mongodb
-  REDIS_HOST: redis
+  REDIS_HOST: redis-master
 envSecrets: []
 
 nodeSelector: {}
