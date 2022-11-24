@@ -30,6 +30,8 @@ ingress:
 
 redis:
   enabled: true
+  auth:
+    enabled: false
   fullnameOverride: redis
   usePassword: false
   architecture: standalone

@@ -31,7 +31,7 @@ The standard labels are frequently used in metadata.
 app: {{ template "screeps.name" . }}
 heritage: {{ .Release.Service | quote }}
 release: {{ .Release.Name | quote }}
-chart: {{ template "screeps.chartref" . }}
+chart: {{ .Chart.Name |  quote }}
 {{- end -}}
 
 {{/*
