@@ -3,5 +3,14 @@ name: screeps
 description: A standalone server for programming game Screeps
 
 type: application
-version: 1.0.0
-appVersion: 5.3.2.4
+version: 1.0.1
+
+dependencies:
+- name: redis
+  version: 17.3.11
+  condition: redis.enabled
+  repository: https://charts.bitnami.com/bitnami
+- name: mongo
+  version: 13.5.0
+  condition: mongo.enabled
+  repository: https://charts.bitnami.com/bitnami

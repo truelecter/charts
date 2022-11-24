@@ -28,6 +28,16 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+redis:
+  enabled: true
+  fullnameOverride: redis
+  usePassword: false
+  configmap: |-
+    appendonly no
+
+mongo:
+  enabled: false
+
 podAnnotations: {}
 
 podSecurityContext: {}
@@ -72,7 +82,9 @@ persistence:
 
 resources: {}
 
-env: {}
+env:
+  MONGO_HOST: mongo
+  REDIS_HOST: redis
 envSecrets: []
 
 nodeSelector: {}
