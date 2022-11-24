@@ -32,6 +32,7 @@ redis:
   enabled: true
   fullnameOverride: redis
   usePassword: false
+  architecture: standalone
   configmap: |-
     appendonly no
 

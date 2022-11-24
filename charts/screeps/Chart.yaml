@@ -3,7 +3,7 @@ name: screeps
 description: A standalone server for programming game Screeps
 
 type: application
-version: 1.0.3
+version: 1.0.4
 
 dependencies:
 - name: redis
