@@ -35,7 +35,8 @@ redis:
   configmap: |-
     appendonly no
 
-mongo:
+mongodb:
+  fullnameOverride: mongodb
   enabled: false
 
 podAnnotations: {}
@@ -83,7 +84,7 @@ persistence:
 resources: {}
 
 env:
-  MONGO_HOST: mongo
+  MONGO_HOST: mongodb
   REDIS_HOST: redis
 envSecrets: []
 
