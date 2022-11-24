@@ -35,6 +35,24 @@ entries:
     version: 1.0.0
   screeps:
   - apiVersion: v2
+    created: "2022-11-24T20:26:41.645508885Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.3.11
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.5.0
+    description: A standalone server for programming game Screeps
+    digest: 47827c95cc6175cc2eda6503977453c1d1c03dcb4cdf2269354667990d668c0f
+    name: screeps
+    type: application
+    urls:
+    - https://github.com/truelecter/charts/releases/download/screeps-1.0.6/screeps-1.0.6.tgz
+    version: 1.0.6
+  - apiVersion: v2
     created: "2022-11-24T20:19:09.66956692Z"
     dependencies:
     - condition: redis.enabled
@@ -162,4 +180,4 @@ entries:
     urls:
     - https://github.com/truelecter/charts/releases/download/simple-bot-0.1.0/simple-bot-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-24T20:19:09.669755827Z"
+generated: "2022-11-24T20:26:41.645539586Z"
